@@ -7,11 +7,11 @@ const footballRoutes = require('./routes/football');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://football-livescore.vercel.app'],
+  origin: ['http://localhost:3000', 'https://football-livescore.vercel.app'],
   credentials: true
 }));
 app.use(express.json());
@@ -25,6 +25,6 @@ app.get('/health', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
