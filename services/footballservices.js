@@ -35,7 +35,6 @@ const getLiveMatches = async () => {
  */
 const getUpcomingMatches = async () => {
   const today = new Date().toISOString().split('T')[0];
-  // Get matches for next 7 days
   const nextWeek = new Date();
   nextWeek.setDate(nextWeek.getDate() + 7);
   const nextWeekStr = nextWeek.toISOString().split('T')[0];
@@ -51,12 +50,13 @@ const getUpcomingMatches = async () => {
  * @returns {Promise<Array>} - previous matches data
  */
 const getPreviousMatches = async () => {
-  const today = new Date("2024-08-16").toISOString().split('T')[0];
-  const currentWeek = new Date();
-  const currentWeekStr = currentWeek.toISOString().split('T')[0];
+  const previousWeeks = new Date()
+  previousWeeks.setDate(previousWeeks.getDate() - 50)
+  const previousWeeksStr = previousWeeks.toISOString().split('T')[0];
+  const currentWeek = new Date().toISOString().split('T')[0];
   
   return getCachedData(`previous-matches_${today}`, async () => {
-    const response = await footballApi.get(`/matches?dateFrom=${today}&dateTo=${currentWeekStr}`);
+    const response = await footballApi.get(`/matches?dateFrom=${previousWeeksStr}&dateTo=${currentWeek}`);
     return response.data;
   }, TTL.FIXTURES);
 };
@@ -91,7 +91,6 @@ const getSingleLeague = async (leagueId) => {
  */
 const getSingleLeagueMatches = async (leagueId) => {
   const today = new Date().toISOString().split('T')[0];
-  // Get matches for next 7 days
   const nextWeek = new Date();
   nextWeek.setDate(nextWeek.getDate() + 7);
   const nextWeekStr = nextWeek.toISOString().split('T')[0];
@@ -108,7 +107,6 @@ const getSingleLeagueMatches = async (leagueId) => {
  */
 const getSingleLeaguePrevMatches = async (leagueId) => {
   const today = new Date("2024-08-16").toISOString().split('T')[0];
-  // Get matches for next 7 days
   const currentWeek = new Date();
   const currentWeekStr = currentWeek.toISOString().split('T')[0];
 
@@ -195,7 +193,6 @@ const getMatchDetails = async (matchId) => {
  * @returns {Object} - Mock data
  */
 const getMockData = (dataType) => {
-  // Basic mock data for development/fallback
   const mockData = {
     liveMatches: {
       matches: [
@@ -211,7 +208,6 @@ const getMockData = (dataType) => {
             halfTime: { home: 1, away: 0 }
           }
         },
-        // Add more mock matches as needed
       ]
     },
     standings: {
@@ -232,7 +228,6 @@ const getMockData = (dataType) => {
               goalsAgainst: 32,
               goalDifference: 51
             },
-            // Add more teams as needed
           ]
         }
       ]

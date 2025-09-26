@@ -1,12 +1,10 @@
 const NodeCache = require('node-cache');
 
-// Create cache instance with default TTL of 5 minutes
 const cache = new NodeCache({
   stdTTL: 300, 
   checkperiod: 60 
 });
 
-// Different TTLs for different types of data
 const TTL = {
   LIVE_MATCHES: 30, 
   FIXTURES: 3600, 
@@ -25,7 +23,6 @@ const TTL = {
  * @returns {Promise<any>} - Resolved data
  */
 const getCachedData = async (key, fetchFunction, ttl = TTL.DEFAULT) => {
-  // Check if data exists in cache
   const cachedData = cache.get(key);
   if (cachedData) {
     return cachedData;
@@ -34,7 +31,6 @@ const getCachedData = async (key, fetchFunction, ttl = TTL.DEFAULT) => {
   try {
     const freshData = await fetchFunction();
     
-    // Store in cache
     cache.set(key, freshData, ttl);
     
     return freshData;

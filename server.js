@@ -3,23 +3,20 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const footballRoutes = require("./routes/football");
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Middleware
 const allowedOrigins = [
   "http://localhost:3000",
   "https://football-livescore.vercel.app",
 ];
 
-// ✅ Configure CORS
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true); // Allow the request
+      callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
     }

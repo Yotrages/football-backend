@@ -1,4 +1,3 @@
-// backend/routes/football.js
 const express = require('express');
 const router = express.Router();
 const footballService = require('../services/footballservices');
@@ -10,9 +9,7 @@ router.get('/live-matches', async (req, res) => {
     res.status(200).json(liveMatches);
   } catch (error) {
     console.error('Error fetching live matches:', error.message);
-    // Fallback to mock data if API fails
     if (error.response && error.response.status === 429) {
-      // API rate limit exceeded
       res.status(429).json(footballService.getMockData('liveMatches'));
     } else {
       res.status(500).json({ 
@@ -23,7 +20,6 @@ router.get('/live-matches', async (req, res) => {
   }
 });
 
-// GET /api/football/upcoming-matches
 router.get('/upcoming-matches', async (req, res) => {
   try {
     const upcomingMatches = await footballService.getUpcomingMatches();
@@ -34,7 +30,6 @@ router.get('/upcoming-matches', async (req, res) => {
   }
 });
 
-// GET /api/football/previous-matches
 router.get('/previous-matches', async (req, res) => {
   try {
     const previousMatches = await footballService.getPreviousMatches();
@@ -77,7 +72,6 @@ router.get('/leagues/:leagueId/standings', async (req, res) => {
   } catch (error) {
     console.error(`Error fetching standings for league ${leagueId}:`, error.message);
     
-    // Fallback to mock data if API fails
     if (error.response && error.response.status === 429) {
       res.json(footballService.getMockData('standings'));
     } else {
