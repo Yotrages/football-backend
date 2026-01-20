@@ -4,7 +4,7 @@ const { getCachedData, TTL } = require('../utils/cache');
 const footballApi = axios.create({
   baseURL: 'https://api.football-data.org/v4',
   headers: {
-    'X-Auth-Token': process.env.FOOTBALL_API_KEY || "7021460337044c99aba2cd0cd512643c" // Replace with your actual API key
+    'X-Auth-Token': process.env.FOOTBALL_API_KEY || "7021460337044c99aba2cd0cd512643c"
   }
 });
 
